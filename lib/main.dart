@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+import './dustman_bloc.dart';
+
 import 'ui/home_page.dart';
 
 void main() {
@@ -16,7 +19,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepOrange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(title: 'Dustman Game'),
+      home: BlocProvider<DustmanBloc>(
+        create: (context) => DustmanBloc(),
+        child: HomePage( title: 'Dustman Game' ),
+      ),
     );
   }
 }

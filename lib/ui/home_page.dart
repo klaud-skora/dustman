@@ -1,4 +1,7 @@
+import 'package:dustman/dustman_bloc.dart';
+import 'package:dustman/logic/dustman_calc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import './dustman_wallet.dart';
 
 class HomePage extends StatelessWidget {
@@ -32,7 +35,22 @@ class HomePage extends StatelessWidget {
               ),
               SizedBox(height: 30.0),
               DustmanWallet( money: 10 ),
-              SizedBox(height: 50.0),
+              Text( 'Number of your trash: 0' ),
+              SizedBox(height: 10.0),
+              // RaisedButton(
+              //   color: Colors.deepOrange,
+              //   shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(18.0),
+              //     side: BorderSide(color: Colors.deepOrange.withBlue(3)),
+              //   ),
+              //   onPressed: () {},
+              //   child: Text( 'Sell them !', style: TextStyle(color: Colors.white), ),
+              // ),
+              // Text(
+              //   '(You will get 2\$ for each)',
+              //   style: TextStyle(fontSize: 11),
+              // ),
+              SizedBox(height: 40.0),
               Text(
                 'Choose amount of new items'
               ),
@@ -46,9 +64,7 @@ class HomePage extends StatelessWidget {
                     width: 30.0,
                     child: FloatingActionButton(
                       child: Icon(Icons.remove),
-                      onPressed: () {
-                        print('less');
-                      },
+                      onPressed: () => BlocProvider.of<DustmanBloc>(context).add(DustmanEvent.DecreaseAmountEvent),
                     ),
                   ),
                   SizedBox(width: 10.0),
@@ -63,7 +79,7 @@ class HomePage extends StatelessWidget {
                       ),
                       borderRadius: BorderRadius.circular(18.0),
                     ),
-                    child: Center( child: Text('1') ),
+                    child: Center( child: Text('${BlocProvider.of<DustmanBloc>(context).state.props[1]}') ),
                   ),
                   SizedBox(width: 10.0),
                   SizedBox(
@@ -71,9 +87,7 @@ class HomePage extends StatelessWidget {
                     width: 30.0,
                     child: FloatingActionButton(
                       child: Icon(Icons.add),
-                      onPressed: () {
-                        print('more');
-                      },
+                      onPressed: () => BlocProvider.of<DustmanBloc>(context).add(DustmanEvent.IncreaseAmountEvent),
                     ),
                   ),
                 ],
@@ -85,8 +99,11 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(18.0),
                   side: BorderSide(color: Colors.deepOrange.withBlue(3)),
                 ),
-                onPressed: () {print('buy');},
-                child: Text( 'Get trash' ),
+                onPressed: () {
+                  DustmanCalc calc = DustmanCalc();
+                  calc.getCost();
+                },
+                child: Text( 'Get trash', style: TextStyle(color: Colors.white), ),
               ),
               Text(
                 '(transation cost: 0,1\$)',

@@ -17,7 +17,7 @@ class DustmanCalc {
   int get amount => _amount;
 
   void increaseAmount() => _amount++;
-  void decreaseAmount() => amount > 0 ? _amount-- : null;
+  void decreaseAmount() => amount > 1 ? _amount-- : null;
   void payForAttempt() => _money - 0.1;
 
   DustmanStatus get state {

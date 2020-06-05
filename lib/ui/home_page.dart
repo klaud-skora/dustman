@@ -79,7 +79,11 @@ class HomePage extends StatelessWidget {
                       ),
                       borderRadius: BorderRadius.circular(18.0),
                     ),
-                    child: Center( child: Text('${BlocProvider.of<DustmanBloc>(context).state.props[1]}') ),
+                    child: BlocBuilder<DustmanBloc, DustmanState>(
+                      builder: (context, state) {
+                        return  Center( child: Text('${state.props[1]}'));
+                      },
+                    ),
                   ),
                   SizedBox(width: 10.0),
                   SizedBox(

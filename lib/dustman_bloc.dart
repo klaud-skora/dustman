@@ -34,6 +34,8 @@ class DustmanBloc extends Bloc<DustmanEvent, DustmanState> {
   // zaozenia gry
 
   DustmanCalc dustmanCalc = DustmanCalc();
+  int _amount = 1;
+  int get amount => _amount;
 
   @override
   Stream<DustmanState> mapEventToState(DustmanEvent event) async* {
@@ -48,12 +50,11 @@ class DustmanBloc extends Bloc<DustmanEvent, DustmanState> {
         break;
       case DustmanEvent.IncreaseAmountEvent:
         dustmanCalc.increaseAmount();
-        print(dustmanCalc.amount);
+        _amount = dustmanCalc.amount;
         yield GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
         break;
       case DustmanEvent.DecreaseAmountEvent:
         dustmanCalc.decreaseAmount();
-        print(dustmanCalc.amount);
         yield GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
         break;
     }

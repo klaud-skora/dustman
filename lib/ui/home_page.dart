@@ -34,22 +34,30 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 30.0),
-              DustmanWallet( money: 10 ),
-              Text( 'Number of your trash: 0' ),
+              BlocBuilder<DustmanBloc, DustmanState>(
+                builder: (context, state) {
+                  return  DustmanWallet( money: state.props[0] );
+                },
+              ),
+              BlocBuilder<DustmanBloc, DustmanState>(
+                builder: (context, state) {
+                  return  Center( child: Text('Number of your trash: ${state.props[2]}'));
+                },
+              ),
               SizedBox(height: 10.0),
-              // RaisedButton(
-              //   color: Colors.deepOrange,
-              //   shape: RoundedRectangleBorder(
-              //     borderRadius: BorderRadius.circular(18.0),
-              //     side: BorderSide(color: Colors.deepOrange.withBlue(3)),
-              //   ),
-              //   onPressed: () {},
-              //   child: Text( 'Sell them !', style: TextStyle(color: Colors.white), ),
-              // ),
-              // Text(
-              //   '(You will get 2\$ for each)',
-              //   style: TextStyle(fontSize: 11),
-              // ),
+              BlocBuilder<DustmanBloc, DustmanState>(
+                builder: (context, state) {
+                  return  state.props[2] != 0 ? RaisedButton(
+                    color: Colors.deepOrange,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(18.0),
+                      side: BorderSide(color: Colors.deepOrange.withBlue(3)),
+                    ),
+                    onPressed: () {},
+                    child: Text( 'Sell them !', style: TextStyle(color: Colors.white)),
+                  ) : SizedBox();
+                },
+              ),
               SizedBox(height: 40.0),
               Text(
                 'Choose amount of new items'

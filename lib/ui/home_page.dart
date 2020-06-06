@@ -1,5 +1,4 @@
 import 'package:dustman/dustman_bloc.dart';
-import 'package:dustman/logic/dustman_calc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import './dustman_wallet.dart';
@@ -53,7 +52,7 @@ class HomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(18.0),
                       side: BorderSide(color: Colors.deepOrange.withBlue(3)),
                     ),
-                    onPressed: () {},
+                    onPressed: () => BlocProvider.of<DustmanBloc>(context).add(DustmanEvent.SellTrashEvent),
                     child: Text( 'Sell them !', style: TextStyle(color: Colors.white)),
                   ) : SizedBox();
                 },
@@ -111,10 +110,7 @@ class HomePage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(18.0),
                   side: BorderSide(color: Colors.deepOrange.withBlue(3)),
                 ),
-                onPressed: () {
-                  DustmanCalc calc = DustmanCalc();
-                  calc.getCost();
-                },
+                onPressed: () => BlocProvider.of<DustmanBloc>(context).add(DustmanEvent.GetTrashEvent),
                 child: Text( 'Get trash', style: TextStyle(color: Colors.white), ),
               ),
               Text(

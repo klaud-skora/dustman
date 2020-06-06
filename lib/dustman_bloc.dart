@@ -38,10 +38,13 @@ class DustmanBloc extends Bloc<DustmanEvent, DustmanState> {
   Stream<DustmanState> mapEventToState(DustmanEvent event) async* {
     switch(event) {
       case DustmanEvent.GetTrashEvent:
+        dustmanCalc.paymentAttempt();
+        // print(dustmanCalc.state);
         if(dustmanCalc.state is GameOver) yield LoseState();
         else yield GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
         break;
       case DustmanEvent.SellTrashEvent:
+        dustmanCalc.sellTrash();
         if(dustmanCalc.state is GameWin) yield WinState();
         else yield GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
         break;

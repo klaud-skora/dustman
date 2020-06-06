@@ -18,7 +18,7 @@ class DustmanCalc {
 
   void increaseAmount() => _amount++;
   void decreaseAmount() => amount > 1 ? _amount-- : null;
-  void payForAttempt() => _money - 0.1;
+  void payForAttempt() => _money -= 0.1;
 
   DustmanStatus get state {
     if( money <= 1.5 && trash == 0) return GameOver();
@@ -33,9 +33,9 @@ class DustmanCalc {
   }
 
   buyTrash(cost, number) {
-    trash = number;
-    _money -= cost * number;
-    _amount = 0; // reset number of trash
+    trash += number;
+    _money = ((money - cost * number) * 10).round() / 10;
+    _amount = 1; // reset number of trash
   }
 
   sellTrash() {
@@ -45,7 +45,7 @@ class DustmanCalc {
 
   paymentAttempt() {
     payForAttempt();
-    var cost = getCost();
+    var cost = getCost(); 
     if( cost * amount <= money ) buyTrash(cost, amount);
   }
 

@@ -8,10 +8,11 @@ class GameOver extends DustmanStatus {}
 
 
 class DustmanCalc {
-  int trash = 0;
+  
   double sellPrice = 2;
   double _money = 10;
   int _amount = 1;
+  int trash = 0;
 
   double get money => _money;
   int get amount => _amount;
@@ -21,8 +22,9 @@ class DustmanCalc {
   void payForAttempt() => _money -= 0.1;
 
   DustmanStatus get state {
-    if( money <= 1.5 && trash == 0) return GameOver();
-    else if ( money >= 50 ) return GameWin();
+    print(money <= 9 && trash == 0);
+    if( money <= 9 && trash == 0) return GameOver();
+    else if ( money >= 11 ) return GameWin();
     else return GameRunning();
   }
 
@@ -47,6 +49,12 @@ class DustmanCalc {
     payForAttempt();
     var cost = getCost(); 
     if( cost * amount <= money ) buyTrash(cost, amount);
+  }
+
+  reset() {
+    _money = 10;
+    _amount = 1;
+    trash = 0;
   }
 
 }

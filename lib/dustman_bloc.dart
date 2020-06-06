@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import './logic/dustman_calc.dart';
 
-enum DustmanEvent { GetTrashEvent, SellTrashEvent, IncreaseAmountEvent, DecreaseAmountEvent }
+enum DustmanEvent { GetTrashEvent, SellTrashEvent, IncreaseAmountEvent, DecreaseAmountEvent, NewGameEvent }
 
 abstract class DustmanState extends Equatable {
   @override
@@ -39,13 +39,15 @@ class DustmanBloc extends Bloc<DustmanEvent, DustmanState> {
     switch(event) {
       case DustmanEvent.GetTrashEvent:
         dustmanCalc.paymentAttempt();
-        // print(dustmanCalc.state);
+        print(dustmanCalc.state);
         if(dustmanCalc.state is GameOver) yield LoseState();
         else yield GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
         break;
       case DustmanEvent.SellTrashEvent:
+        print(dustmanCalc.state);
         dustmanCalc.sellTrash();
         if(dustmanCalc.state is GameWin) yield WinState();
+        else if(dustmanCalc.state is GameOver) yield LoseState();
         else yield GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
         break;
       case DustmanEvent.IncreaseAmountEvent:
@@ -56,6 +58,9 @@ class DustmanBloc extends Bloc<DustmanEvent, DustmanState> {
         dustmanCalc.decreaseAmount();
         yield GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
         break;
+      case DustmanEvent.NewGameEvent:
+        dustmanCalc.reset();
+        yield GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
     }
   }
 }

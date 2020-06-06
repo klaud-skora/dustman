@@ -108,25 +108,10 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(fontSize: 11),
                   ),
                 ],
-              ) : state is WinState ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text('Congrats, you won!'),
-                SizedBox(height: 20.0),
-                RaisedButton(
-                  color: Colors.deepOrange,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                    side: BorderSide(color: Colors.deepOrange.withBlue(3)),
-                  ),
-                  onPressed: () => BlocProvider.of<DustmanBloc>(context).add(DustmanEvent.NewGameEvent),
-                  child: Text( 'New game', style: TextStyle( color: Colors.white ) ),
-                ), 
-              ],
-            ) : state is LoseState ?  Column(
+              ) : state is LoseState  || state is WinState ?  Column(
               mainAxisAlignment: MainAxisAlignment.center,
                children: <Widget>[
-                Text('Congrats, you won!'),
+                Text(state is WinState ? 'Congrats, you won!' : 'You lose :('),
                 SizedBox(height: 20.0),
                 RaisedButton(
                   color: Colors.deepOrange,

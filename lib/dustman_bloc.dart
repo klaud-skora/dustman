@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import './logic/dustman_calc.dart';
+import './logic/cost.dart';
 
 enum DustmanEvent { GetTrashEvent, SellTrashEvent, IncreaseAmountEvent, DecreaseAmountEvent, NewGameEvent }
 
@@ -30,21 +31,18 @@ class DustmanBloc extends Bloc<DustmanEvent, DustmanState> {
   @override
   DustmanState get initialState => GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
 
-  // zaozenia gry
-
-  DustmanCalc dustmanCalc = DustmanCalc();
+  static RandomCost cost = RandomCost();
+  DustmanCalc dustmanCalc = DustmanCalc(cost);
 
   @override
   Stream<DustmanState> mapEventToState(DustmanEvent event) async* {
     switch(event) {
       case DustmanEvent.GetTrashEvent:
         dustmanCalc.paymentAttempt();
-        print(dustmanCalc.state);
         if(dustmanCalc.state is GameOver) yield LoseState();
         else yield GameRunningState(dustmanCalc.money, dustmanCalc.amount, dustmanCalc.trash);
         break;
       case DustmanEvent.SellTrashEvent:
-        print(dustmanCalc.state);
         dustmanCalc.sellTrash();
         if(dustmanCalc.state is GameWin) yield WinState();
         else if(dustmanCalc.state is GameOver) yield LoseState();

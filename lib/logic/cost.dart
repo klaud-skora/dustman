@@ -11,10 +11,9 @@ class RandomCost extends Cost {
   
   @override
   double newCost() {
-    var probability = 0.95;
     var random = new Random();
-    if(random.nextDouble() > probability) cost = ((random.nextDouble() * .5 + 2.0) * 10).round() / 10; // 2 < price < 2.5 
-    else cost = ((random.nextDouble() * .5 + 1.5) * 10).round() / 10; // 1.5 < price < 2.0
+    cost = ((random.nextDouble() + 1.5) * 10).round() / 10;
+    print(cost);
     return cost;
   }
 }
